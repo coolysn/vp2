@@ -1,0 +1,28 @@
+{
+  "name": "vp2",
+  "version": "1.0.0",
+  "description": "veebiprogrammeerimise rühm 2 express.js rakendus",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://coolysn@github.com/coolysn/vp2.git"
+  },
+  "keywords": [
+    "veebiprogrammeerimine",
+    "Node.js",
+    "Tallinna",
+    "Ülikool"
+  ],
+  "author": "Sophia Nikolajevski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coolysn/vp2/issues"
+  },
+  "homepage": "https://github.com/coolysn/vp2#readme", 
+  "dependencies": {
+    "express": "~4.16.1"
+  }
+}
