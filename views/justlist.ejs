@@ -10,12 +10,12 @@
   <p>See leht on loodud õppetöö raames <a href="https://www.tlu.ee">Tallinna Ülikoolis</a>, Digitehnoloogiate instituudis ja ei sisalda tõsiseltvõetavat materjali!</p>
   <hr>
   <ul>
-	<li><a href="/"Avalehele</a></li>
+	<li><a href="/">Avalehele</a></li>
   </ul>
   <hr>
   <h2><%= h2 %></h2>
   <ol>
-	<%= listData.forEach(function(phrase){ %>
+	<% listData.forEach(function(phrase){ %>
 		<li><%= phrase %></li>
 	<% }); %>
   </ol>

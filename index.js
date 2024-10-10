@@ -51,12 +51,16 @@ app.post("/regvisit", (req, res)=>{
 			throw err;
 		}
 		else {
-			fs.appendFile("public/textfiles/log.txt", req.body.firstNameInput + " " + req.body.lastNameInput + ";", (err)=>{
+			const weekdayNow = dateTime.weekDayEt();
+			const dateNow = dateTime.dateFormattedEt();
+			const timeNow = dateTime.currentTimeEt();
+			const logEntry = req.body.firstNameInput + " " + req.body.lastNameInput + " - " + weekdayNow + ", " + dateNow + " kell " + timeNow + ";\n";
+			fs.appendFile("public/textfiles/log.txt", logEntry, (err)=>{
 				if(err){
 					throw err;
 				}
 				else {
-					console.log("Faii kirjutati!");
+					console.log("Faili kirjutati külastus koos ajaga!");
 					res.render("regvisit");
 				}
 			});
@@ -65,4 +69,21 @@ app.post("/regvisit", (req, res)=>{
 	//res.render("regvisit");
 });
 
-app.listen(5214);
+app.get("/visitlog", (req,res)=>{
+	let visitLog = [];
+	fs.readFile("public/textfiles/log.txt", "utf8", (err, data)=>{;
+		if(err){
+			//throw err;
+			res.render("justlist", {h2: "Külastajate nimekiri", listData: ["Ei leidnud midagi!"]});
+		}
+		else {
+				visitLog = data.split(";");
+				res.render("justlist", {h2: "Külastajad:", listData: visitLog});
+		}
+	});
+});
+app.listen(5213);
+
+//sul muidu 5213
+//vaja kellaaeg ja kuupäev salvestada (kui regvisit)
+ 
