@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Sophia Nikolajevski</title>
+	
+</head>
+<body>
+	<img src="images/vp_banner_2024.png" alt="veebiprogrameerimise 2024 aasta kursuse bänner">
+	<h1>Sophia Nikolajevski</h1>
+	<p>See leht on loodud õppetöö raames <a href="https://www.tlu.ee">Tallinna ülikoolis</a>, Digitehnoloogiate instituudis ja ei sisalda tõsiseltvõetavat materjali!</p>
+	<hr>
+	<ul>
+		<li><a href="/">Avalehele</a></li>
+		<li><a href="/regvisitdb">Registreeri oma külastus (pane nimi andmebaasi kirja)</a></li>
+	</ul>
+	<hr>
+	<h2>Registreeritud külastajad:</h2>
+	<ul>
+        <% if (listData && listData.length > 0) { %>
+            <% listData.forEach(function(entry) { %>
+                <li><%= entry.file_name %> <%= entry.alt_name %>, külastas: <%= entry.visit_date %></li>
+            <% }); %>
+        <% } else { %>
+            <li>Ei ole registreeritud külastusi!</li>
+        <% } %>
+    </ul>
+    <hr>
+</body>
+</html>	

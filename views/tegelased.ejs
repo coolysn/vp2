@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <title>Sophia Nikolajevski</title>
+</head>
+<body>
+  <img src="/banner/vp_banner_2024.png" alt="veebiprogrammeerimise 2024 aasta kursuse bänner">
+  <h1>Sophia Nikolajevski</h1>
+  <p>See leht on loodud õppetöö raames <a href="https://www.tlu.ee">Tallinna ülikoolis</a>, Digitehnoloogiate instituudis ja ei sisalda tõsiseltvõetavat materjali!</p>
+  <hr>
+  <h2>Eesti filmitegelased</h2>
+  <ul>
+	<li><a href="/home">Avalehele</a></li>
+	<li><a href="/eestifilm">Eesti filmi avaleht</a></li>
+  </ul>
+  <hr>
+  <ul>
+    <% persons.forEach(function(item){ %>
+	  <li><%= item.first_name %> <%= item.last_name %>, sündinud: <%= item.birth_date %>, <a href="/eestifilm/personrelations/id=<%= item.id %>">Vaata seoseid</a></li>
+	  <% }); %>
+  </ul>
+</body>
+</html>

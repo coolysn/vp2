@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+	<meta charset="utf-8">
+	<title>Sophia Nikolajevski</title>
+	<link rel="stylesheet" href="/style/gallery.css">
+	<link rel="stylesheet" href="/style/modal.css">
+	<script src="/script/gallery.js" defer></script>
+</head>
+<body>
+	<img src="/banner/vp_banner_2024.png" alt="veebiprogrameerimise 2024 aasta kursuse bänner">
+	<h1>Sophia Nikolajevski</h1>
+	<p>See leht on loodud õppetöö raames <a href="https://www.tlu.ee">Tallinna ülikoolis</a>, Digitehnoloogiate instituudis ja ei sisalda tõsiseltvõetavat materjali!</p>
+	<hr>
+	<ul>
+		<li><a href="/home">Avalehele</a></li>
+		<li><a href="/photoupload">Lae üles oma foto andmebaasi!</a></li>
+	</ul>
+	<hr>
+	<dialog id="modal" class="modalarea">
+		<span id="modalClose" class="modalclose">&times;</span>
+		<div class="modalhorizontal">
+			<div class="modalvertical">
+				<p id="modalCaption"></p>
+				<img id="modalImage" src="/pics/empty.png" alt="galeriipilt">
+			</div>
+		</div>
+	</dialog>
+	<h2>Üleslaetud fotod:</h2>
+	<div class="gallery">
+		<% listData.forEach(function(image){ %>
+			<img src="<%= image.href %><%= image.filename %>" alt="<%= image.alt %>" data-filename="<%=image.filename %>" data-id="<%= image.id %>" class="thumbs">
+		<% }); %>
+	</div>
+  </ol>
+</body>
+</html>	
