@@ -285,7 +285,7 @@ app.post("/regvisitdb", (req, res)=>{
 		let sqlReq = "INSERT INTO vp2visitlog (first_name, last_name) VALUES(?,?)";
 		conn.query(sqlReq, [req.body.firstNameInput, req.body.lastNameInput], (err, sqlRes)=>{
 			if(err){
-				notice = "Tehnilistel pÃµhjustel andmeid ei salvestatud!";
+				notice = "Tehnilistel põhjustel andmeid ei salvestatud!";
 				res.render("regvisitdb", {notice: notice, firstName: firstName, lastName: lastName});
 				throw err;
 			}
@@ -315,53 +315,17 @@ app.get("/visitlogdb", (req, res)=>{
 	});
 });
 
+//fotode üleslaadimise osa eraldi marsruutide failiga
+const photoupRouter = require("./routes/photouploadRoutes");
+app.use("/photoupload", photoupRouter);
 
-//pildigalerii üleslaadimine
-app.get("/photoupload", (req, res)=>{
-	res.render("photoupload");
-});
+//galerii osa eraldi marsruutide failiga
+const galleryRouter = require("./routes/galleryRoutes");
+app.use("/gallery", galleryRouter);
 
-app.post("/photoupload", upload.single("photoInput"), (req, res)=>{
-	console.log(req.body);
-	console.log(req.file);
-	const fileName = "vp_" + Date.now() + ".jpg";
-	fs.rename(req.file.path, req.file.destination + "/" + fileName, (err)=>{
-		console.log("Faili nime muutmise viga: " + err);
-	});
-	sharp(req.file.destination + "/" + fileName).resize(800,600).jpeg({quality: 90}).toFile("./public/gallery/normal/" + fileName);
-	sharp(req.file.destination + "/" + fileName).resize(100,100).jpeg({quality: 90}).toFile("./public/gallery/thumb/" + fileName);
-	//salvestame pildi info andmebaasi
-	let sqlReq = "INSERT INTO vp2photos (file_name, orig_name, alt_text, privacy, user_id) VALUES(?,?,?,?,?)";
-	const userId = 1;
-	conn.query(sqlReq, [fileName, req.file.originalname, req.body.altInput, req.body.privacyInput, userId], (err, result)=>{
-		if(err){
-			throw(err);
-		}
-		else {
-			res.render("photoupload");
-		}
-	});
-});	
-
-app.get("/gallery", (req, res)=>{
-	//loon andmebaasi päringu
-	let sqlReq = "SELECT id, file_name, alt_text FROM vp2photos WHERE privacy = ? AND deleted IS NULL ORDER BY id DESC";
-	const privacy = 3;
-	let photoList = []
-	conn.execute(sqlReq, [privacy], (err, result)=>{
-		if(err){
-			throw err;
-		}
-		else {
-			console.log(result);
-			for(let i = 0; i < result.length; i ++) {
-				photoList.push({id: result[i].id, href: "/gallery/thumb/", filename: result[i].file_name, alt: result[i].alt_text});
-			}
-			res.render("gallery", {listData: photoList});
-		}
-	});
-	//res.render("gallery");
-});
+//ilmateate osa eraldi marsruutide failiga
+const weatherRouter = require("./routes/weatherRouter");
+app.use("/weather", weatherRouter);
 
 function checkLogin(req, res, next){
 	if(req.session != null){

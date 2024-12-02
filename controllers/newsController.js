@@ -1,5 +1,6 @@
 const dbInfo = require("../../../vp2024config");
 const mysql = require("mysql2");
+const dateTime = require("../dateTime");
 
 const conn = mysql.createConnection({
 	host: dbInfo.configData.host,
@@ -74,9 +75,32 @@ const newsList = (req, res)=>{
 
 };
 
+
+//@desc page for read news item
+//@route GET /api/news
+//@access private
+
+const newsReader = (req, res)=>{
+	let sql = "SELECT news_title, news_text, news_date FROM vp2news WHERE id = ? AND expire_date > ?";
+		//let userid = 1;
+		conn.execute(sql, [req.params.id, new Date()], (err, result)=>{
+			if(err) {
+				//throw err;
+				console.log(err);
+				const news = {id: 0, news_title: "Sellist uudist kahjuks pole!", news_text: "", news_date: null};
+				res.render('readnewsarticle', {news: news});
+			} else {
+				console.log(dateTime.dateFormattedEt(result[0].news_date));
+				let news = {news_title: result[0].news_title, news_text: result[0].news_text, news_date: dateTime.dateFormattedEt(result[0].news_date)};
+				res.render('readnewsarticle', {news: news});
+			}
+		});
+};
+
 module.exports = {
 	newsHome,
 	addNews,
 	addingNews,
-	newsList
+	newsList,
+	newsReader
 };
